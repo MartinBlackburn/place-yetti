@@ -1,8 +1,10 @@
-Options +FollowSymLinks
-IndexIgnore */*
-
 # Turn on the RewriteEngine
 RewriteEngine On
 
-# Rules
-RewriteRule . index.html
+# RULES
+# any request /number/number or just /number loads an image
+RewriteCond %{REQUEST_URI} ^/[0-9]+/[0-9]+/ [OR]
+RewriteCond %{REQUEST_URI} ^/[0-9]+/[0-9]+ [OR]
+RewriteCond %{REQUEST_URI} ^/[0-9]+/ [OR]
+RewriteCond %{REQUEST_URI} ^/[0-9]+
+RewriteRule . placeholder.php

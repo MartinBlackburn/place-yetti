@@ -54,8 +54,8 @@ class Placeholder
     {   
         //get request url
         $requestURI = explode("/", $_SERVER["REQUEST_URI"]);
-        $width = $requestURI[1];
-        $height = $requestURI[2];
+        $width = 300;
+        $height = 300;
         
         //set width if numeric
         if(is_numeric($width))
