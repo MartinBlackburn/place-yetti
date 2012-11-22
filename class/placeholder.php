@@ -4,24 +4,29 @@ class Placeholder
 {
     private $images = array();
     private $imageDir;
+    private $imageWidth = 300;
+    private $imageHeight = 300;
     
     /**
 	 * Construct the PlaceHoler calls
 	 */
     function __construct()
-    {
+    {        
         //set default image dir
         $this->imageDir = getcwd() . "/images/";
         
-        //add allimages to the array
-        $this->getImages();
+        //add all images to the array
+        $this->setImages();
+        
+        //set image dimensions to those requested
+        $this->setDimensions();
     }
     
     
     /**
     * Add all images to the images array
     */
-    private function getImages()
+    private function setImages()
     {           
         $dirhandler = opendir($this->imageDir);
         
@@ -39,6 +44,33 @@ class Placeholder
         }
         
         closedir($dirhandler);
+    }
+    
+    
+    /**
+    * Set the image dimensions
+    */
+    private function setDimensions()
+    {   
+        //get request url
+        $requestURI = explode("/", $_SERVER["REQUEST_URI"]);
+        $width = $requestURI[1];
+        $height = $requestURI[2];
+        
+        //set width if numeric
+        if(is_numeric($width))
+        {
+            $this->imageWidth = $width;
+        }
+        
+        //set height if numeric, otherwise set it same as width
+        if(is_numeric($height))
+        {
+            $this->imageHeight = $height;
+        }
+        else {
+            $this->imageHeight = $width;
+        }
     }
     
     
