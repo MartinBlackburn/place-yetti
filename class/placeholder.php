@@ -4,11 +4,12 @@ class Placeholder
 {
     private $images = array();
     private $imagesDir;
-    private $image;
-    private $imageWidth = 300;
-    private $imageHeight = 300;
-    private $imagePath;
-    private $imageType;
+    private $sourceImage;
+    private $sourceImagePath;
+    private $sourceImageType;
+    private $placeHolderImage;
+    private $desiredWidth = 300;
+    private $desiredHeight = 300;
     
     /**
 	 * Construct the PlaceHoler calls
@@ -63,16 +64,16 @@ class Placeholder
         //set width if numeric
         if(is_numeric($width))
         {
-            $this->imageWidth = $width;
+            $this->desiredWidth = $width;
         }
         
         //set height if numeric, otherwise set it same as width
         if(is_numeric($height))
         {
-            $this->imageHeight = $height;
+            $this->desiredHeight = $height;
         }
         else {
-            $this->imageHeight = $width;
+            $this->desiredHeight = $width;
         }
     }
     
@@ -84,35 +85,9 @@ class Placeholder
     {   
         $imagePath =  $this->imagesDir . $this->images[array_rand($this->images)];
         
-        $this->imagePath = $imagePath;
-        $this->imageType = image_type_to_mime_type(exif_imagetype($imagePath));
-        $this->image = ImageCreateFromString(file_get_contents($imagePath));
-    }
-    
-    
-    /**
-    * Scales the image based on a new width, maintaining the original aspect ratio.
-    * 
-    * @param int $width
-    */
-    private function resizeByWidth($width) 
-    {
-        $ratio = $this->imageWidth / $width;
-        
-        $this->imageHeight = round($this->imageHeight * $ratio);
-    }
-    
-    
-    /**
-     * Scales the image based on a new height, maintaining the original aspect ratio.
-     * 
-     * @param int $height
-     */
-    private function resizeByHeight($height) 
-    {
-        $ratio = $this->imageHeight / $height;
-        
-        $this->imageWidth = $this->imageWidth * $ratio;
+        $this->sourceImagePath = $imagePath;
+        $this->sourceImageType = image_type_to_mime_type(exif_imagetype($imagePath));
+        $this->sourceImage = ImageCreateFromString(file_get_contents($imagePath));
     }
     
     
@@ -122,27 +97,39 @@ class Placeholder
     private function resizeImage()
     {
         //get source with and height
-        list($sourceWidth, $sourceHeight) = getimagesize($this->imagePath);
+        list($sourceWidth, $sourceHeight) = getimagesize($this->sourceImagePath);
         
-        //get ratios
-        $widthRatio = $this->imageWidth / $sourceWidth;
-        $heightRatio = $this->imageHeight / $sourceHeight;
+        //get aspect ratios
+        $sourceRatio = $sourceWidth / $sourceHeight;
+        $desiredRatio = $this->desiredWidth / $this->desiredHeight;
         
-        //check ratios and resize by the bigger one
-        if($widthRatio > $heightRatio) {
-            $this->resizeByWidth($sourceWidth);
+        //check aspect ratios and resize as needed
+        if ($sourceRatio > $desiredRatio) 
+        {
+            $newHeight = $this->desiredHeight;
+            $newWidth = (int)($this->desiredHeight * $sourceRatio);
         } else {
-            $this->resizeByHeight($sourceHeight);
+            $newWidth = $this->desiredWidth;
+            $newHeight = (int)($this->desiredWidth / $sourceRatio);
         }
         
-        //create blank image with the correct size
-        $imageResized = imagecreatetruecolor($this->imageWidth, $this->imageHeight);
+        //make a temporary image, resized based on the source image and desired aspect ratio
+        $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($resizedImage, $this->sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $sourceWidth, $sourceHeight);
         
-        //copy new image at the new size from the source image to the new blank image
-        imagecopyresampled($imageResized, $this->image, 0, 0, 0, 0, $this->imageWidth, $this->imageHeight, $sourceWidth, $sourceHeight);
+        //get crop positions
+        $cropPosX = ($newWidth - $this->desiredWidth) / 2;
+        $cropPosY = ($newHeight - $this->desiredHeight) / 2;
+        
+        //create placeholder image from the resized one, cropped around the center
+        $placeHolderImage = imagecreatetruecolor($this->desiredWidth, $this->desiredHeight);
+        imagecopy($placeHolderImage, $resizedImage, 0, 0, $cropPosX, $cropPosY, $this->desiredWidth, $this->desiredHeight);
         
         //update the image
-        $this->image = $imageResized;
+        $this->placeHolderImage = $placeHolderImage;
+        
+        //destroy images
+        imagedestroy($resizedImage);
     }
     
     
@@ -151,7 +138,7 @@ class Placeholder
     */
     private function setHeader()
     {
-        header('Content-type: ' . $this->imageType);
+        header('Content-type: ' . $this->sourceImageType);
     }
     
     
@@ -166,7 +153,7 @@ class Placeholder
         
         $this->setHeader();
         
-        imagepng($this->image);
-        imagedestroy($this->image);        
+        imagepng($this->placeHolderImage);
+        imagedestroy($this->placeHolderImage);        
     }
 }
