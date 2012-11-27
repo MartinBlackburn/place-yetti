@@ -1,0 +1,238 @@
+/*----------------------------------------------------------------------------------------------------------------*\
+    RESET
+\*----------------------------------------------------------------------------------------------------------------*/
+/*
+RESET
+DEFAULT TEXT
+PAGE CONTAINERS
+HOME
+*/
+
+a, abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del, details, dfn, dl, 
+dt, em, fieldset, figcaption, figure, footer, form, header, hgroup, h1, h2, h3, h4, h5, h6, html, i, iframe, img, 
+ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, 
+sup, table, tbody, td, th, thead, time, tfoot, tr, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* ----- Typography ----- */
+strong, mark, b {
+    font-weight: bold; 
+    font-style: inherit;
+}
+
+/* ----- Focus----- */
+:focus {
+    outline: 0;
+}
+
+/* ----- Cursors ----- */
+a {
+    cursor: pointer;
+}
+
+/* ----- Other ----- */
+.clear {
+    float: none;
+    clear: both;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box; 
+}
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------------*\
+    DEFAULT TEXT
+\*----------------------------------------------------------------------------------------------------------------*/
+body {
+	padding-top: 30px;
+	
+    background: #fff;
+    
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    line-height: 1.3em;
+    
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-weight: bold;
+}
+
+h1, .h1 {
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
+h2, .h2 {
+    font-size: 1.5em;
+    line-height: 1em;
+}
+
+h3, .h3 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+}
+
+h4, .h4 {
+    font-size: 1.125em;
+    line-height: 1.333em;
+}
+
+h5, .h5 {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+h6, .h6 {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+a {
+    color: #2290BF;
+    text-decoration: none;
+    
+    -webkit-transition: all 0.2s ease-in;  
+    -moz-transition: all 0.2s ease-in;  
+    -ms-transition: all 0.2s ease-in;  
+    -o-transition: all 0.2s ease-in;  
+    transition: all 0.2s ease-in; 
+}
+
+a:hover {
+    color: #49B1DE;
+}
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------------*\
+    PAGE CONTAINERS
+\*----------------------------------------------------------------------------------------------------------------*/
+.content {
+    width: 980px;
+    padding: 0 20px;
+    margin: 0 auto;
+    
+    position: relative;
+}
+
+.row {
+    width: 100%;
+    
+    background: #fff;
+    
+    position: relative;
+}
+
+.row.altBG {
+    background: #f5f5f5;
+}
+
+.oneCol, .twoCol, .threeCol, .fourCol, .fiveCol, .sixCol, .sevenCol, .eightCol, .nineCol, .tenCol, .elevenCol {
+    margin-right: 2%;
+    float: left;
+}
+
+.oneCol {
+    width: 6.5%;
+}
+
+.twoCol {
+    width: 15%;
+}
+
+.threeCol {
+    width: 23.5%;
+}
+
+.fourCol {
+    width: 32%;
+}
+
+.fiveCol {
+    width: 40.5%;
+}
+
+.sixCol {
+    width: 49%;
+}
+
+.sevenCol {
+    width: 57.5%;
+}
+
+.eightCol {
+    width: 66%;
+}
+
+.nineCol {
+    width: 74.5%;
+}
+
+.tenCol {
+    width: 83%;
+}
+
+.elevenCol {
+    width: 91.5%;
+}
+
+.row:after,
+.content:after {
+    height: 0;
+    display: block;
+    content: "";
+    visibility: hidden;
+    clear: both;
+}
+
+.row .last {
+    margin-right: 0;
+}
+
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------------*\
+    HOME
+\*----------------------------------------------------------------------------------------------------------------*/
+.description {
+	margin-bottom: 20px;
+}
+
+.usage {
+	margin-bottom: 20px;
+}
+
+.image,
+.sixCol.last {
+	line-height: 0;
+}
+
+img {
+	border: 1px solid #ccc;
+	margin-bottom: 8px;
+}
