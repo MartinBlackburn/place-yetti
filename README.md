@@ -9,9 +9,9 @@ E.G
 http://place-yetti.com/400/400
 
 ##For you own use
-You can use this code for you own placeholder generator. 
+You can use this code for you own placeholder generator.  
 Just put all the code on your server and place what ever images you want in the images directory and your good to go.
 
 ###Shameless self promotion
-This was developed for http://yetti.co.uk
+This was developed for http://yetti.co.uk  
 It seems that the Yetti is scared of cats or something.
