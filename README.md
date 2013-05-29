@@ -12,6 +12,8 @@ http://place-yetti.com/400/400
 You can use this code for you own placeholder generator.  
 Just put all the code on your server and place what ever images you want in the images directory and your good to go.
 
+Note: you will need to enable mod_rewrite and have the GD2 module for PHP installed.
+
 ###Shameless self promotion
 This was developed for http://yetti.co.uk  
 It seems that the Yetti is scared of cats or something.
